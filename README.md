@@ -9,7 +9,7 @@ A simple and userfriendly  weather application built using javascript that shows
 - fast and responsive design 
 
 #Technologies used :
- - HTML
+- HTML
 - CSS
 - Javascript
 - Openweather API
