@@ -1,6 +1,8 @@
-
 const API_KEY = "8b7eee9532e86096ddca76171ff937fc";
 
+// ===============================
+// MAIN WEATHER FUNCTION
+// ===============================
 function getWeather() {
     const city = document.getElementById("city").value.trim();
     const result = document.getElementById("result");
@@ -34,20 +36,22 @@ function getWeather() {
                 <p>☁ Weather: ${description}</p>
                 <p>💧 Humidity: ${humidity}%</p>
                 <p>💨 Wind Speed: ${speed} m/s</p>
-                <p class="text-muted">Fetching AQI...</p>
+
+                <p id="aqi" class="text-muted">Fetching AQI...</p>
             `;
 
             getAQI(lat, lon);
         })
         .catch(() => {
-            result.innerHTML = `<p class="text-danger">Error fetching data</p>`;
+            result.innerHTML = `<p class="text-danger">Error fetching weather data</p>`;
         });
 }
 
-
+// ===============================
 // AQI FUNCTION
+// ===============================
 function getAQI(lat, lon) {
-    const result = document.getElementById("result");
+    const aqiDiv = document.getElementById("aqi");
 
     const aqiURL = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 
@@ -62,33 +66,29 @@ function getAQI(lat, lon) {
             if (aqi === 1) {
                 aqiText = "Good";
                 badgeClass = "bg-success";
-            }
-            else if (aqi === 2) {
+            } else if (aqi === 2) {
                 aqiText = "Fair";
                 badgeClass = "bg-warning";
-            }
-            else if (aqi === 3) {
+            } else if (aqi === 3) {
                 aqiText = "Moderate";
-                badgeClass = "bg-info";   
-            }
-            else if (aqi === 4) {
+                badgeClass = "bg-info";
+            } else if (aqi === 4) {
                 aqiText = "Poor";
                 badgeClass = "bg-danger";
-            }
-            else if (aqi === 5) {
+            } else if (aqi === 5) {
                 aqiText = "Very Poor";
                 badgeClass = "bg-dark";
             }
 
-            result.innerHTML += `
-                <p>🌫 AQI:
-                    <span class="badge ${badgeClass}">${aqiText}</span>
-                </p>
+            aqiDiv.innerHTML = `
+                🌫 AQI:
+                <span class="badge ${badgeClass}">${aqiText}</span>
             `;
         })
         .catch(() => {
-            result.innerHTML += `<p class="text-danger">AQI data not available</p>`;
+            aqiDiv.innerHTML = `<span class="text-danger">AQI data not available</span>`;
         });
 }
+
 
 
